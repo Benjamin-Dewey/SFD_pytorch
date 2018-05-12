@@ -114,7 +114,10 @@ class s3fd(nn.Module):
         m = f7_2.view(1,-1)
         #print(m)
         op = self.fc_1(m)
-        return F.softmax(op)
+        out = F.softmax(op)
+        print('OUT')
+        print(typeof(out))
+        return out
 #         f3_3 = self.conv3_3_norm(f3_3)
 #         f4_3 = self.conv4_3_norm(f4_3)
 #         f5_3 = self.conv5_3_norm(f5_3)

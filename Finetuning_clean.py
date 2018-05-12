@@ -25,8 +25,8 @@ import os,sys,cv2,random,datetime,time,math
 import argparse
 import numpy as np
 
-# from net_s3fd import *
-from s3fd import *
+from net_s3fd import *
+# from s3fd import *
 from bbox import *
 from sklearn.preprocessing import MultiLabelBinarizer
 from PIL import Image
@@ -158,7 +158,7 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
 
 
 num_classes = 2
-myModel = s3fd_original()
+myModel = s3fd(num_classes=)
 
 
 loadedModel = torch.load('s3fd_convert.pth')

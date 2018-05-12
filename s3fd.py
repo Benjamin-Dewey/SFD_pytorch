@@ -150,6 +150,7 @@ class s3fd_original(nn.Module):
         cls1  = torch.cat([bmax,chunk[3]],dim=1)
         print("resized_cls1")
         print(cls1.size())
+        print(type(cls2))
         #return [cls1,reg1,cls2,reg2,cls3,reg3,cls4,reg4,cls5,reg5,cls6,reg6]
         #return [cls1,cls2,cls3,cls4,cls5,cls6]
         return torch.from_numpy(array([cls2,cls3,cls4,cls5]).astype('float'))
