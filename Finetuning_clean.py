@@ -158,19 +158,18 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
 num_classes = 2
 myModel = s3fd(num_classes)
 
-for param in myModel.parameters():
-    param.requires_grad = False
-
-print('WEIGHTS')
-print(myModel.conv4_3_norm_mbox_conf.weight[0])
-
-
 
 loadedModel = torch.load('s3fd_convert.pth')
 newModel = myModel.state_dict()
 pretrained_dict = {k: v for k, v in loadedModel.items() if k in newModel}
 newModel.update(pretrained_dict)
 myModel.load_state_dict(newModel)
+
+for param in myModel.parameters():
+    param.requires_grad = False
+
+print('WEIGHTS')
+print(myModel.conv4_3_norm_mbox_conf.weight[0])
 
 
 # In[8]:
