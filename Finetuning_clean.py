@@ -25,8 +25,8 @@ import os,sys,cv2,random,datetime,time,math
 import argparse
 import numpy as np
 
-from net_s3fd import *
-# from s3fd import *
+# from net_s3fd import *
+from s3fd import *
 from bbox import *
 from sklearn.preprocessing import MultiLabelBinarizer
 from PIL import Image
