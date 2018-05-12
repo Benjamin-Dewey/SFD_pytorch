@@ -181,10 +181,10 @@ criterion = nn.MSELoss()
 for param in myModel.parameters():
     param.requires_grad = False
 
-print('WEIGHT conv4_3_norm_mbox_conf')
-print(myModel.conv4_3_norm_mbox_conf.weight[0])
-print('WEIGHT conv4_3_norm_gender')
-print(myModel.conv4_3_norm_gender.weight[0])
+#print('WEIGHT conv4_3_norm_mbox_conf')
+#print(myModel.conv4_3_norm_mbox_conf.weight[0])
+#print('WEIGHT conv4_3_norm_gender')
+#print(myModel.conv4_3_norm_gender.weight[0])
 
 
 
