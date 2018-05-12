@@ -18,7 +18,7 @@ class L2Norm(nn.Module):
         x = x / norm * self.weight.view(1,-1,1,1)
         return x
 
-class s3fd(nn.Module):
+class s3fd_original(nn.Module):
     def __init__(self):
         super(s3fd_original, self).__init__()
         self.conv1_1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1)
