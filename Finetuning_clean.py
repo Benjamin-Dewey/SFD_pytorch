@@ -138,6 +138,8 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
 
             optimizer.zero_grad()
             outputs = model(data)
+            print('--TYPE--')
+            print(type(outputs))
             loss = criterion(outputs, target)
 
             if i%50==0:
