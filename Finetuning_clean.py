@@ -46,10 +46,10 @@ class CelebDataset(Dataset):
     """
 
     def __init__(self, csv_path, img_path, img_ext, transform=None):
-    
+
         tmp_df = pd.read_csv(csv_path)
         assert tmp_df['Image_Name'].apply(lambda x: os.path.isfile(img_path + x + img_ext)).all(), "Some images referenced in the CSV file were not found"
-        
+
         self.mlb = MultiLabelBinarizer()
         self.img_path = img_path
         self.img_ext = img_ext
@@ -63,14 +63,14 @@ class CelebDataset(Dataset):
         img = cv2.resize(img, (256,256))
         img = img - np.array([104,117,123])
         img = img.transpose(2, 0, 1)
-        
+
         #img = img.reshape((1,)+img.shape)
         img = torch.from_numpy(img).float()
         #img = Variable(torch.from_numpy(img).float(),volatile=True)
-        
+
         #if self.transform is not None:
         #    img = self.transform(img)
-        
+
         label = torch.from_numpy(self.y_train[index])
         return img, label
 
@@ -84,7 +84,7 @@ class CelebDataset(Dataset):
 transformations = transforms.Compose(
     [
      transforms.ToTensor()
-     
+
      #transforms.Normalize(mean=[104,117,123])
      ])
 
@@ -123,7 +123,7 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
     for epoch in range(num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
-        
+
         model.train()
         running_loss = 0.0
 
@@ -143,7 +143,7 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
             if i%50==0:
                 print("Reached iteration ",i)
                 running_loss += loss.data[0]
-            
+
             loss.backward()
             optimizer.step()
             running_loss += loss.data[0]
@@ -157,6 +157,15 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
 
 num_classes = 2
 myModel = s3fd(num_classes)
+
+for param in myModel.parameters():
+    param.requires_grad = False
+
+print('WEIGHTS')
+print(myModel.conv4_3_norm_mbox_conf.weight[0])
+
+
+
 loadedModel = torch.load('s3fd_convert.pth')
 newModel = myModel.state_dict()
 pretrained_dict = {k: v for k, v in loadedModel.items() if k in newModel}
@@ -178,7 +187,7 @@ criterion = nn.MSELoss()
 
 for param in myModel.parameters():
     param.requires_grad = False
-    
+
 myModel.fc_1 = nn.Linear(2304,num_classes)
 optimizer = optim.SGD(filter(lambda p: p.requires_grad,myModel.parameters()), lr=0.0001, momentum=0.9)
 if use_cuda:
@@ -194,12 +203,13 @@ def transform(img_path):
         img = cv2.resize(img, (256,256))
         img = img - np.array([104,117,123])
         img = img.transpose(2, 0, 1)
-        
+
         img = img.reshape((1,)+img.shape)
         img = torch.from_numpy(img).float()
-        
+
         return Variable(img.cuda())
 myModel = myModel.cuda()
+
 testImage1 = transform('data/Test/TestCeleb_4/25-FaceId-0.jpg')
 testImage2 = transform('data/Test/TestCeleb_4/26-FaceId-0.jpg')
 testImage3 = transform('data/Test/TestCeleb_4/27-FaceId-0.jpg')
@@ -219,4 +229,3 @@ print("testImage3 - ",output3)
 print("testImage1 - ",output4)
 print("testImage2 - ",output5)
 print("testImage3 - ",output6)
-
