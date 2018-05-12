@@ -47,7 +47,7 @@ class s3fd(nn.Module):
 
         self.conv6_1 = nn.Conv2d(1024, 256, kernel_size=1, stride=1, padding=0)
         self.conv6_2 = nn.Conv2d(256, 512, kernel_size=3, stride=2, padding=1)
-        self.conv6_2_gender    = nn.Conv2d(256, 512, kernel_size=3, stride=2, padding=1) # gender layer
+        self.conv6_2_gender    = nn.Conv2d(256, 256, kernel_size=3, stride=2, padding=1) # gender layer
 
         self.conv7_1 = nn.Conv2d(512, 128, kernel_size=1, stride=1, padding=0)
         self.conv7_2 = nn.Conv2d(128, 256, kernel_size=3, stride=2, padding=1)
