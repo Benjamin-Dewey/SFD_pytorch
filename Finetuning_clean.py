@@ -158,7 +158,7 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
 
 
 num_classes = 2
-myModel = s3fd(num_classes=)
+myModel = s3fd(num_classes)
 
 
 loadedModel = torch.load('s3fd_convert.pth')
