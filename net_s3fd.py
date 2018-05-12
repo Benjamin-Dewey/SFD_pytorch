@@ -34,20 +34,16 @@ class s3fd(nn.Module):
         self.conv4_1 = nn.Conv2d(256, 512, kernel_size=3, stride=1, padding=1)
         self.conv4_2 = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1)
         self.conv4_3 = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1)
-        self.conv4_3_gender    = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1) # gender layer
 
         self.conv5_1 = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1)
         self.conv5_2 = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1)
         self.conv5_3 = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1)
-        self.conv5_3_gender    = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1) # gender layer
 
         self.fc6     = nn.Conv2d(512, 1024, kernel_size=3, stride=1, padding=3)
         self.fc7     = nn.Conv2d(1024, 1024, kernel_size=1, stride=1, padding=0)
-        self.fc7_gender        = nn.Conv2d(1024, 1024, kernel_size=1, stride=1, padding=1) # gender layer
 
         self.conv6_1 = nn.Conv2d(1024, 256, kernel_size=1, stride=1, padding=0)
         self.conv6_2 = nn.Conv2d(256, 512, kernel_size=3, stride=2, padding=1)
-        self.conv6_2_gender    = nn.Conv2d(512, 512, kernel_size=3, stride=2, padding=1) # gender layer
 
         self.conv7_1 = nn.Conv2d(512, 128, kernel_size=1, stride=1, padding=0)
         self.conv7_2 = nn.Conv2d(128, 256, kernel_size=3, stride=2, padding=1)
@@ -90,22 +86,19 @@ class s3fd(nn.Module):
         h = F.relu(self.conv4_1(h))
         h = F.relu(self.conv4_2(h))
         h = F.relu(self.conv4_3(h)); f4_3 = h
-        h = F.relu(self.conv4_3_gender(h))
+
         h = F.max_pool2d(h, 2, 2)
 
         h = F.relu(self.conv5_1(h))
         h = F.relu(self.conv5_2(h))
         h = F.relu(self.conv5_3(h)); f5_3 = h
-        h = F.relu(self.conv5_3_gender(h))
         h = F.max_pool2d(h, 2, 2)
 
 
         h = F.relu(self.fc6(h))
         h = F.relu(self.fc7(h));     ffc7 = h
-        h = F.relu(self.fc7_gender(h))
         h = F.relu(self.conv6_1(h))
         h = F.relu(self.conv6_2(h)); f6_2 = h
-        h = F.relu(self.conv6_2_gender(h))
         h = F.relu(self.conv7_1(h))
         h = F.relu(self.conv7_2(h)); f7_2 = h
         #print(f7_2.size())
@@ -116,7 +109,7 @@ class s3fd(nn.Module):
         op = self.fc_1(m)
         out = F.softmax(op)
         print('OUT')
-        print(typeof(out))
+        print(type(out))
         return out
 #         f3_3 = self.conv3_3_norm(f3_3)
 #         f4_3 = self.conv4_3_norm(f4_3)
