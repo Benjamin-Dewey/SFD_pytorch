@@ -30,6 +30,7 @@ from s3fd import *
 from bbox import *
 from sklearn.preprocessing import MultiLabelBinarizer
 from PIL import Image
+from pprint import pprint
 
 
 # In[2]:
@@ -181,14 +182,14 @@ criterion = nn.MSELoss()
 for param in myModel.parameters():
     param.requires_grad = False
 
+print('PRETTY PRINT')
+pprint(vars(myModel))
+
 myModel.fc_1 = nn.Linear(2304,num_classes)
 optimizer = optim.SGD(filter(lambda p: p.requires_grad,myModel.parameters()), lr=0.0001, momentum=0.9)
 if use_cuda:
     myModel = myModel.cuda()
 model_ft = train_model(myModel, criterion, optimizer, num_classes, num_epochs=100)
-
-print('WEIGHTS')
-print(myModel.conv4_3_norm_mbox_conf.weight[0])
 
 
 # In[ ]:
