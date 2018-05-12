@@ -155,7 +155,7 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
 # In[7]:
 
 
-#num_classes = 2
+num_classes = 2
 myModel = s3fd_original()
 
 
