@@ -165,12 +165,6 @@ pretrained_dict = {k: v for k, v in loadedModel.items() if k in newModel}
 newModel.update(pretrained_dict)
 myModel.load_state_dict(newModel)
 
-for param in myModel.parameters():
-    param.requires_grad = False
-
-print('WEIGHTS')
-print(myModel.conv4_3_norm_mbox_conf.weight[0])
-
 
 # In[8]:
 
@@ -186,6 +180,10 @@ criterion = nn.MSELoss()
 
 for param in myModel.parameters():
     param.requires_grad = False
+
+print('WEIGHTS')
+print(myModel.conv4_3_norm_mbox_conf.weight[0])
+
 
 myModel.fc_1 = nn.Linear(2304,num_classes)
 optimizer = optim.SGD(filter(lambda p: p.requires_grad,myModel.parameters()), lr=0.0001, momentum=0.9)
