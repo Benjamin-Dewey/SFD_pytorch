@@ -34,20 +34,20 @@ class s3fd(nn.Module):
         self.conv4_1 = nn.Conv2d(256, 512, kernel_size=3, stride=1, padding=1)
         self.conv4_2 = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1)
         self.conv4_3 = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1)
-        self.conv4_3_gender    = nn.Conv2d(512, 2, kernel_size=3, stride=1, padding=1) # gender layer
+        self.conv4_3_gender    = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1) # gender layer
 
         self.conv5_1 = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1)
         self.conv5_2 = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1)
         self.conv5_3 = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1)
-        self.conv5_3_gender    = nn.Conv2d(512, 2, kernel_size=3, stride=1, padding=1) # gender layer
+        self.conv5_3_gender    = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1) # gender layer
 
         self.fc6     = nn.Conv2d(512, 1024, kernel_size=3, stride=1, padding=3)
         self.fc7     = nn.Conv2d(1024, 1024, kernel_size=1, stride=1, padding=0)
-        self.fc7_gender        = nn.Conv2d(1024, 2, kernel_size=1, stride=1, padding=1) # gender layer
+        self.fc7_gender        = nn.Conv2d(1024, 1024, kernel_size=1, stride=1, padding=1) # gender layer
 
         self.conv6_1 = nn.Conv2d(1024, 256, kernel_size=1, stride=1, padding=0)
         self.conv6_2 = nn.Conv2d(256, 512, kernel_size=3, stride=2, padding=1)
-        self.conv6_2_gender    = nn.Conv2d(256, 2, kernel_size=3, stride=2, padding=1) # gender layer
+        self.conv6_2_gender    = nn.Conv2d(256, 512, kernel_size=3, stride=2, padding=1) # gender layer
 
         self.conv7_1 = nn.Conv2d(512, 128, kernel_size=1, stride=1, padding=0)
         self.conv7_2 = nn.Conv2d(128, 256, kernel_size=3, stride=2, padding=1)

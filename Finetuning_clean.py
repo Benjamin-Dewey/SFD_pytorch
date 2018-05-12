@@ -30,7 +30,6 @@ from net_s3fd import *
 from bbox import *
 from sklearn.preprocessing import MultiLabelBinarizer
 from PIL import Image
-from pprint import pprint
 
 
 # In[2]:
@@ -182,8 +181,8 @@ criterion = nn.MSELoss()
 for param in myModel.parameters():
     param.requires_grad = False
 
-print('PRETTY PRINT')
-pprint(vars(myModel))
+print('WEIGHT')
+print(myModel.conv4_3.weight[0])
 
 myModel.fc_1 = nn.Linear(2304,num_classes)
 optimizer = optim.SGD(filter(lambda p: p.requires_grad,myModel.parameters()), lr=0.0001, momentum=0.9)
