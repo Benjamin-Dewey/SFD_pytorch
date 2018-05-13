@@ -153,7 +153,7 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
                     genScore = ogen[0,:,hindex,windex].contiguous().view(1,2)
                     genList.append(genScore)
 
-            genList = np.array(genList)
+            genList = torch.from_numpy(np.array(genList))
 
             loss = criterion(genList, target)
 
