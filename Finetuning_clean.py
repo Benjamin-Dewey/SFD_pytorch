@@ -153,7 +153,10 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
                     genScore = ogen[0,:,hindex,windex].contiguous().view(1,2)
                     genList.append(genScore)
 
-            genList = torch.from_numpy(np.array(genList))
+            print('GENLIST')
+            print(genList)
+            print('TARGET')
+            print(target)
 
             loss = criterion(genList, target)
 
@@ -193,7 +196,7 @@ myModel.eval()
 # In[ ]:
 
 
-criterion = nn.MSELoss()
+criterion = nn.BCELoss()
 
 for param in myModel.parameters():
     param.requires_grad = False
