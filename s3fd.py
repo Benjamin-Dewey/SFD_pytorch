@@ -87,37 +87,29 @@ class s3fd_original(nn.Module):
         h = F.relu(self.conv3_3(h)); f3_3 = h
         h = F.max_pool2d(h, 2, 2)
 
-        print("f3_3")
-        print(h.size())
 
         h = F.relu(self.conv4_1(h))
         h = F.relu(self.conv4_2(h))
         h = F.relu(self.conv4_3(h)); f4_3 = h
 
-
         h = F.max_pool2d(h, 2, 2)
-        print("f4_3")
-        print(h.size())
+
 
         h = F.relu(self.conv5_1(h))
         h = F.relu(self.conv5_2(h))
         h = F.relu(self.conv5_3(h)); f5_3 = h
         h = F.max_pool2d(h, 2, 2)
-        print("f5_3")
-        print(h.size())
+
 
         h = F.relu(self.fc6(h))
         h = F.relu(self.fc7(h));     ffc7 = h
-        print("ffc7")
-        print(h.size())
+
         h = F.relu(self.conv6_1(h))
         h = F.relu(self.conv6_2(h)); f6_2 = h
-        print("f6_2")
-        print(h.size())
+
         h = F.relu(self.conv7_1(h))
         h = F.relu(self.conv7_2(h)); f7_2 = h
-        print("f7")
-        print(h.size())
+
         f3_3 = self.conv3_3_norm(f3_3)
         f4_3 = self.conv4_3_norm(f4_3)
         f5_3 = self.conv5_3_norm(f5_3)
