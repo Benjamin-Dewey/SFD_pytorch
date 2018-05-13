@@ -200,19 +200,10 @@ for param in myModel.parameters():
     param.requires_grad = False
 
 
-
-for i in range(len(myModel.conv4_3_norm_mbox_conf.weight[0])):
-    weight = myModel.conv4_3_norm_mbox_conf.weight[0][i].clone()
-    weight.requires_grad = True
-    weight.unsqueeze_(0)
-    weight = weight + weight
-    print(weight)
-    break;
-
-
-
-
-myModel.fc_1 = nn.Linear(2304,num_classes)
+myModel.conv4_3_norm_gender    = nn.Conv2d(512, 2, kernel_size=3, stride=1, padding=1) # gender layer
+myModel.conv5_3_norm_gender    = nn.Conv2d(512, 2, kernel_size=3, stride=1, padding=1) # gender layer
+myModel.fc7_gender        = nn.Conv2d(1024, 2, kernel_size=3, stride=1, padding=1) # gender layer
+myModel.conv6_2_gender    = nn.Conv2d(512, 2, kernel_size=3, stride=1, padding=1) # gender layer
 optimizer = optim.SGD(filter(lambda p: p.requires_grad,myModel.parameters()), lr=0.0001, momentum=0.9)
 if use_cuda:
     myModel = myModel.cuda()
