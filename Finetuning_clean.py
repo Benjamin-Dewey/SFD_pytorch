@@ -153,20 +153,20 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
                     genScore = ogen[0,:,hindex,windex].contiguous().view(1,2)
                     genList.append(genScore)
 
+            losses = []
             for gen in genList:
                 gen = Variable(gen.cuda(), requires_grad=True)
                 loss = criterion(gen, target)
-                running_loss += loss.data[0]
-                loss.backward()
-                optimizer.step()
+                losses.append(loss)
 
             if i%50==0:
                 print("Reached iteration ",i)
                 #running_loss += loss.data[0]
 
-            #loss.backward()
-            #optimizer.step()
-            #running_loss += loss.data[0]
+            loss = sum(losses)
+            loss.backward()
+            optimizer.step()
+            running_loss += loss.data[0]
         if epoch % 10 == 0:
             save(model, optimizer, loss, 'faceRecog.saved.model')
         print(running_loss)
