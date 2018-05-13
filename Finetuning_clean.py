@@ -170,6 +170,7 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
         if epoch % 10 == 0:
             save(model, optimizer, loss, 'faceRecog.saved.model')
         print(running_loss)
+        print(genList)
 
 
 # In[7]:
