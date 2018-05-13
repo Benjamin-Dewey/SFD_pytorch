@@ -30,7 +30,7 @@ from s3fd import *
 from bbox import *
 from sklearn.preprocessing import MultiLabelBinarizer
 from PIL import Image
-
+from copy import deepcopy
 
 # In[2]:
 
@@ -200,19 +200,15 @@ criterion = nn.BCELoss()
 for param in myModel.parameters():
     param.requires_grad = False
 
-for weight in myModel.conv4_3_norm_mbox_conf.weight[0]:
-    print(weight.requires_grad)
-    #t = torch.Tensor(weight)
-    #t.unsqueeze_(0)
-    #t = t + t
-    #print('TENSOR?')
-    #print(t)
-    break;
 
-#print('WEIGHT conv4_3_norm_mbox_conf')
-#print(myModel.conv4_3_norm_mbox_conf.weight[0])
-#print('WEIGHT conv4_3_norm_gender')
-#print(myModel.conv4_3_norm_gender.weight[0])
+
+for i in range(len(myModel.conv4_3_norm_mbox_conf.weight[0])):
+    weight = deepcopy(myModel.conv4_3_norm_mbox_conf.weight[0][i])
+    weight.requires_grad = True
+    weight.unsqueeze_(0)
+    weight = weight + weight
+    print(weight)
+    break;
 
 
 
