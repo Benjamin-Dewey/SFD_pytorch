@@ -154,10 +154,8 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
                     genList.append(genScore)
 
             genList = np.array(genList)
-            print("MADE IT THIS FAR")
-            print(genList)
 
-            loss = criterion(olist, target)
+            loss = criterion(genList, target)
 
             if i%50==0:
                 print("Reached iteration ",i)
