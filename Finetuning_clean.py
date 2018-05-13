@@ -150,7 +150,7 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
                     axc,ayc = stride/2+windex*stride,stride/2+hindex*stride
                     score = ocls[0,1,hindex,windex]
                     if score<0.05: continue
-                    genScore = ogen[0,:,hindex,windex].contiguous().view(1,4)
+                    genScore = ogen[0,:,hindex,windex].contiguous().view(1,2)
                     genList.append(genScore)
 
             genList = np.array(genList)
