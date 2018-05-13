@@ -139,7 +139,7 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
             genList = []
             for j in range(len(olist)): olist[j] = F.softmax(olist[j])
             for j in range(len(olist)//2):
-                ocls,ogen = olist[j*2].data.cpu(),olist[j*2+1]
+                ocls,ogen = olist[j*2].data.cpu(),olist[j*2+1]g
                 FB,FC,FH,FW = ocls.size() # feature map size
                 stride = 2**(j+2)    # 4,8,16,32,64,128
                 anchor = stride*4
@@ -153,13 +153,10 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
 
             losses = []
             for gen in genList:
-                gen = Variable(gen.cuda(), requires_grad=True)
                 loss = criterion(gen, target)
                 losses.append(loss)
 
-            if i%50==0:
-                print("Reached iteration ",i)
-                #running_loss += loss.data[0]
+            if i%50==0: print("Reached iteration ",i)
 
             loss = sum(losses)
             loss.backward()
@@ -202,9 +199,11 @@ myModel.conv4_3_norm_gender    = nn.Conv2d(512, 2, kernel_size=3, stride=1, padd
 myModel.conv5_3_norm_gender    = nn.Conv2d(512, 2, kernel_size=3, stride=1, padding=1) # gender layer
 myModel.fc7_gender        = nn.Conv2d(1024, 2, kernel_size=3, stride=1, padding=1) # gender layer
 myModel.conv6_2_gender    = nn.Conv2d(512, 2, kernel_size=3, stride=1, padding=1) # gender layer
+
 optimizer = optim.SGD(filter(lambda p: p.requires_grad,myModel.parameters()), lr=0.0001, momentum=0.9)
-if use_cuda:
-    myModel = myModel.cuda()
+
+if use_cuda: myModel = myModel.cuda()
+
 model_ft = train_model(myModel, criterion, optimizer, num_classes, num_epochs=100)
 
 
@@ -221,6 +220,7 @@ def transform(img_path):
         img = torch.from_numpy(img).float()
 
         return Variable(img.cuda())
+
 myModel = myModel.cuda()
 
 testImage1 = transform('data/Test/TestCeleb_4/25-FaceId-0.jpg')
