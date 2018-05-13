@@ -154,6 +154,7 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
                     genList.append(genScore)
 
             for gen in genList:
+                gen = Variable(gen, requires_grad=True)
                 loss = criterion(gen, target)
                 print('MADE IT THIS FAR')
                 print(loss)
