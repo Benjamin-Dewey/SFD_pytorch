@@ -139,7 +139,7 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
             genList = []
             for j in range(len(olist)): olist[j] = F.softmax(olist[j])
             for j in range(len(olist)//2):
-                ocls,ogen = olist[j*2].data.cpu(),olist[j*2+1]g
+                ocls,ogen = olist[j*2].data.cpu(),olist[j*2+1]
                 FB,FC,FH,FW = ocls.size() # feature map size
                 stride = 2**(j+2)    # 4,8,16,32,64,128
                 anchor = stride*4
