@@ -30,7 +30,6 @@ from s3fd import *
 from bbox import *
 from sklearn.preprocessing import MultiLabelBinarizer
 from PIL import Image
-from copy import deepcopy
 
 # In[2]:
 
@@ -203,7 +202,7 @@ for param in myModel.parameters():
 
 
 for i in range(len(myModel.conv4_3_norm_mbox_conf.weight[0])):
-    weight = deepcopy(myModel.conv4_3_norm_mbox_conf.weight[0][i])
+    weight = myModel.conv4_3_norm_mbox_conf.weight[0][i].clone()
     weight.requires_grad = True
     weight.unsqueeze_(0)
     weight = weight + weight
