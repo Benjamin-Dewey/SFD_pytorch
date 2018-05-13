@@ -134,7 +134,6 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
             else:
                 data, target = Variable(img), Variable(torch.Tensor(label))
             target = target.view(1, num_classes)
-            print(target)
 
             optimizer.zero_grad()
             olist = model(data)
