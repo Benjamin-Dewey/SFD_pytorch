@@ -153,7 +153,7 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
                     genScore = ogen[0,:,hindex,windex].contiguous().view(1,2)
                     genList.append(genScore)
 
-            for (gen in genList):
+            for gen in genList:
                 loss = criterion(gen, target)
                 running_loss += loss.data[0]
                 loss.backward()
