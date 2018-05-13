@@ -199,8 +199,7 @@ for param in myModel.parameters(): param.requires_grad = False
 copyModel = deepcopy(myModel)
 
 myModel.conv4_3_norm_gender    = nn.Conv2d(512, 2, kernel_size=3, stride=1, padding=1) # gender layer
-myModel.conv4_3_norm_gender.weight[0] = copyModel.conv4_3_norm_mbox_conf.weight[0]
-myModel.conv4_3_norm_gender.weight[1] = copyModel.conv4_3_norm_mbox_conf.weight[0]
+myModel.conv4_3_norm_gender.weight = torch.cat((copyModel.conv4_3_norm_mbox_conf.weight[0], copyModel.conv4_3_norm_mbox_conf.weight[0]), 0)
 
 myModel.conv5_3_norm_gender    = nn.Conv2d(512, 2, kernel_size=3, stride=1, padding=1) # gender layer
 myModel.conv5_3_norm_gender.weight[0] = copyModel.conv5_3_norm_mbox_conf.weight[0]
