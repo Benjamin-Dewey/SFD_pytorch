@@ -138,12 +138,24 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
 
             optimizer.zero_grad()
             olist = model(data)
+            genList = []
+            for i in range(len(olist)): olist[i] = F.softmax(olist[i])
+            for i in range(len(olist)//2):
+                ocls,ogen = olist[i*2].data.cpu(),olist[i*2+1].data.cpu()
+                FB,FC,FH,FW = ocls.size() # feature map size
+                stride = 2**(i+2)    # 4,8,16,32,64,128
+                anchor = stride*4
+                for Findex in range(FH*FW):
+                    windex,hindex = Findex%FW,Findex//FW
+                    axc,ayc = stride/2+windex*stride,stride/2+hindex*stride
+                    score = ocls[0,1,hindex,windex]
+                    if score<0.05: continue
+                    genScore = ogen[0,:,hindex,windex].contiguous().view(1,4)
+                    genList.append(genScore)
 
-            print('MADE IT THIS FAR - 1')
-
-            for i in range(len(olist)//2): olist[i*2] = F.softmax(olist[i*2])
-
-            print('MADE IT THIS FAR - 2')
+            genList = np.array(genList)
+            print("MADE IT THIS FAR")
+            print(genList)
 
             loss = criterion(olist, target)
 
