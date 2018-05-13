@@ -198,15 +198,18 @@ myModel.eval()
 criterion = nn.BCELoss()
 
 for param in myModel.parameters():
+    print(param)
     param.requires_grad = False
-
+'''
 for weight in myModel.conv4_3_norm_mbox_conf.weight[0]:
+    print(weight)
     t = torch.Tensor(weight)
     t.unsqueeze_(0)
     t = t + t
     print('TENSOR?')
     print(t)
     break;
+'''
 #print('WEIGHT conv4_3_norm_mbox_conf')
 #print(myModel.conv4_3_norm_mbox_conf.weight[0])
 #print('WEIGHT conv4_3_norm_gender')
