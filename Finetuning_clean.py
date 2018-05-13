@@ -199,16 +199,20 @@ for param in myModel.parameters(): param.requires_grad = False
 copyModel = deepcopy(myModel)
 
 myModel.conv4_3_norm_gender    = nn.Conv2d(512, 2, kernel_size=3, stride=1, padding=1) # gender layer
-myModel.conv4_3_norm_gender.weight = copyModel.conv4_3_norm_mbox_conf.weight
+myModel.conv4_3_norm_gender.weight[0] = copyModel.conv4_3_norm_mbox_conf.weight[0]
+myModel.conv4_3_norm_gender.weight[1] = copyModel.conv4_3_norm_mbox_conf.weight[0]
 
 myModel.conv5_3_norm_gender    = nn.Conv2d(512, 2, kernel_size=3, stride=1, padding=1) # gender layer
-myModel.conv5_3_norm_gender.weight = copyModel.conv5_3_norm_mbox_conf.weight
+myModel.conv5_3_norm_gender.weight[0] = copyModel.conv5_3_norm_mbox_conf.weight[0]
+myModel.conv5_3_norm_gender.weight[1] = copyModel.conv5_3_norm_mbox_conf.weight[0]
 
 myModel.fc7_gender        = nn.Conv2d(1024, 2, kernel_size=3, stride=1, padding=1) # gender layer
-myModel.fc7_gender.weight = copyModel.fc7_mbox_conf.weight
+myModel.fc7_gender.weight[0] = copyModel.fc7_mbox_conf.weight[0]
+myModel.fc7_gender.weight[1] = copyModel.fc7_mbox_conf.weight[0]
 
 myModel.conv6_2_gender    = nn.Conv2d(512, 2, kernel_size=3, stride=1, padding=1) # gender layer
-myModel.conv6_2_gender.weight = copyModel.conv6_2_mbox_conf.weight
+myModel.conv6_2_gender.weight[0] = copyModel.conv6_2_mbox_conf.weight[0]
+myModel.conv6_2_gender.weight[1] = copyModel.conv6_2_mbox_conf.weight[0]
 
 optimizer = optim.SGD(filter(lambda p: p.requires_grad,myModel.parameters()), lr=0.0001, momentum=0.9)
 
