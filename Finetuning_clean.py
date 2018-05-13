@@ -155,6 +155,8 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
 
             for gen in genList:
                 loss = criterion(gen, target)
+                print('MADE IT THIS FAR')
+                print(loss)
                 running_loss += loss.data[0]
                 loss.backward()
                 optimizer.step()
