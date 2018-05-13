@@ -138,7 +138,7 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
             optimizer.zero_grad()
             olist = model(data)
             genList = []
-            for i in range(len(olist)): olist[i] = F.softmax(olist[i])
+            for i in range(len(olist)): olist[i] = F.softmax(olist[i], dim=1)
             for i in range(len(olist)//2):
                 ocls,ogen = olist[i*2].data.cpu(),olist[i*2+1].data.cpu()
                 FB,FC,FH,FW = ocls.size() # feature map size
@@ -152,6 +152,7 @@ def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
                     genScore = ogen[0,:,hindex,windex].contiguous().view(1,2)
                     genList.append(genScore)
 
+            print(len(genList))
             losses = []
             for gen in genList:
                 gen = Variable(gen.cuda(), requires_grad=True)
