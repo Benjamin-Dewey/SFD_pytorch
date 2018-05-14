@@ -30,7 +30,6 @@ from s3fd import *
 from bbox import *
 from sklearn.preprocessing import MultiLabelBinarizer
 from PIL import Image
-from copy import deepcopy
 
 # In[2]:
 
@@ -196,26 +195,29 @@ criterion = nn.BCELoss()
 
 for param in myModel.parameters(): param.requires_grad = False
 
-#copyModel = deepcopy(myModel)
-
 myModel.conv4_3_norm_gender = nn.Conv2d(512, 2, kernel_size=3, stride=1, padding=1) # gender layer
 myModel.conv4_3_norm_gender.weight[0].data.copy_(myModel.conv4_3_norm_mbox_conf.weight[0].data)
 myModel.conv4_3_norm_gender.weight[1].data.copy_(myModel.conv4_3_norm_mbox_conf.weight[0].data)
-print(len(myModel.conv4_3_norm_gender.bias))
 myModel.conv4_3_norm_gender.bias[0].data.copy_(myModel.conv4_3_norm_mbox_conf.bias[0].data)
 myModel.conv4_3_norm_gender.bias[1].data.copy_(myModel.conv4_3_norm_mbox_conf.bias[0].data)
 
 myModel.conv5_3_norm_gender = nn.Conv2d(512, 2, kernel_size=3, stride=1, padding=1) # gender layer
 myModel.conv5_3_norm_gender.weight[0].data.copy_(myModel.conv5_3_norm_mbox_conf.weight[0].data)
 myModel.conv5_3_norm_gender.weight[1].data.copy_(myModel.conv5_3_norm_mbox_conf.weight[0].data)
+myModel.conv5_3_norm_gender.bias[0].data.copy_(myModel.conv5_3_norm_mbox_conf.bias[0].data)
+myModel.conv5_3_norm_gender.bias[1].data.copy_(myModel.conv5_3_norm_mbox_conf.bias[0].data)
 
 myModel.fc7_gender = nn.Conv2d(1024, 2, kernel_size=3, stride=1, padding=1) # gender layer
 myModel.fc7_gender.weight[0].data.copy_(myModel.fc7_mbox_conf.weight[0].data)
 myModel.fc7_gender.weight[1].data.copy_(myModel.fc7_mbox_conf.weight[0].data)
+myModel.fc7_gender.bias[0].data.copy_(myModel.fc7_mbox_conf.bias[0].data)
+myModel.fc7_gender.bias[1].data.copy_(myModel.fc7_mbox_conf.bias[0].data)
 
 myModel.conv6_2_gender = nn.Conv2d(512, 2, kernel_size=3, stride=1, padding=1) # gender layer
 myModel.conv6_2_gender.weight[0].data.copy_(myModel.conv6_2_mbox_conf.weight[0].data)
 myModel.conv6_2_gender.weight[1].data.copy_(myModel.conv6_2_mbox_conf.weight[0].data)
+myModel.conv6_2_gender.bias[0].data.copy_(myModel.conv6_2_mbox_conf.bias[0].data)
+myModel.conv6_2_gender.bias[1].data.copy_(myModel.conv6_2_mbox_conf.bias[0].data)
 
 optimizer = optim.SGD(filter(lambda p: p.requires_grad,myModel.parameters()), lr=0.0001, momentum=0.4)
 
