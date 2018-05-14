@@ -218,7 +218,7 @@ optimizer = optim.SGD(filter(lambda p: p.requires_grad,myModel.parameters()), lr
 
 if use_cuda: myModel = myModel.cuda()
 
-model_ft = train_model(myModel, criterion, optimizer, num_classes, num_epochs=100)
+model_ft = train_model(myModel, criterion, optimizer, num_classes, num_epochs=10)
 
 
 # In[ ]:
@@ -244,7 +244,7 @@ testImage4 = transform('data/Test/TestCeleb_10/25-FaceId-0.jpg')
 testImage5 = transform('data/Test/TestCeleb_10/26-FaceId-0.jpg')
 testImage6 = transform('data/Test/TestCeleb_10/24-FaceId-0.jpg')
 
-def detectGender(data):
+def detectGender(data, model):
     olist = model(data)
     genList = []
     for j in range(len(olist)): olist[j] = F.softmax(olist[j])
@@ -266,12 +266,12 @@ def detectGender(data):
             female += gen[1]
         return [male, female]
 
-output1 = detectGender(testImage1)
-output2 = detectGender(testImage2)
-output3 = detectGender(testImage2)
-output4 = detectGender(testImage4)
-output5 = detectGender(testImage5)
-output6 = detectGender(testImage6)
+output1 = detectGender(testImage1, myModel)
+output2 = detectGender(testImage2, myModel)
+output3 = detectGender(testImage2, myModel)
+output4 = detectGender(testImage4, myModel)
+output5 = detectGender(testImage5, myModel)
+output6 = detectGender(testImage6, myModel)
 print("testImage1 - ",output1)
 print("testImage2 - ",output2)
 print("testImage3 - ",output3)
