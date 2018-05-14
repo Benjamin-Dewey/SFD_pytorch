@@ -214,7 +214,7 @@ myModel.conv6_2_gender = nn.Conv2d(512, 2, kernel_size=3, stride=1, padding=1) #
 myModel.conv6_2_gender.weight[0].data.copy_(myModel.conv6_2_mbox_conf.weight[0].data)
 myModel.conv6_2_gender.weight[1].data.copy_(myModel.conv6_2_mbox_conf.weight[0].data)
 
-optimizer = optim.SGD(filter(lambda p: p.requires_grad,myModel.parameters()), lr=0.0005, momentum=0.9)
+optimizer = optim.SGD(filter(lambda p: p.requires_grad,myModel.parameters()), lr=0.0002, momentum=0.9)
 
 if use_cuda: myModel = myModel.cuda()
 
@@ -260,11 +260,7 @@ def detectGender(data, model):
             if score<0.05: continue
             genScore = ogen[0,:,hindex,windex].contiguous().view(1,2)
             genList.append(genScore)
-        male = 0.0; female = 0.0;
-        for gen in genList:
-            male += gen[0]
-            female += gen[1]
-        return [male, female]
+        return sum(genList)
 
 output1 = detectGender(testImage1, myModel)
 output2 = detectGender(testImage2, myModel)
