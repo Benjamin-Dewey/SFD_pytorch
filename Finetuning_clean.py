@@ -119,7 +119,7 @@ def save(model, optimizer, loss, filename):
 # In[6]:
 
 
-def train_model(model, criterion, optimizer, num_classes, num_epochs = 150):
+def train_model(model, criterion, optimizer, num_classes, num_epochs):
     for epoch in range(num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
@@ -218,7 +218,7 @@ optimizer = optim.SGD(filter(lambda p: p.requires_grad,myModel.parameters()), lr
 
 if use_cuda: myModel = myModel.cuda()
 
-model_ft = train_model(myModel, criterion, optimizer, num_classes, num_epochs=1)
+model_ft = train_model(myModel, criterion, optimizer, num_classes, num_epochs=150)
 
 
 # In[ ]:
