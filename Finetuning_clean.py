@@ -218,7 +218,7 @@ optimizer = optim.SGD(filter(lambda p: p.requires_grad,myModel.parameters()), lr
 
 if use_cuda: myModel = myModel.cuda()
 
-model_ft = train_model(myModel, criterion, optimizer, num_classes, num_epochs=100)
+model_ft = train_model(myModel, criterion, optimizer, num_classes, num_epochs=1)
 
 
 # In[ ]:
@@ -260,7 +260,7 @@ def detectGender(data, model):
             if score<0.05: continue
             genScore = ogen[0,:,hindex,windex].contiguous().view(1,2)
             genList.append(genScore)
-        return sum(genList)
+    return sum(genList)
 
 output1 = detectGender(testImage1, myModel)
 output2 = detectGender(testImage2, myModel)
