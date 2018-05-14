@@ -214,7 +214,7 @@ myModel.conv6_2_gender = nn.Conv2d(512, 2, kernel_size=3, stride=1, padding=1) #
 myModel.conv6_2_gender.weight[0].data.copy_(myModel.conv6_2_mbox_conf.weight[0].data)
 myModel.conv6_2_gender.weight[1].data.copy_(myModel.conv6_2_mbox_conf.weight[0].data)
 
-optimizer = optim.SGD(filter(lambda p: p.requires_grad,myModel.parameters()), lr=0.0001, momentum=0.9)
+optimizer = optim.SGD(filter(lambda p: p.requires_grad,myModel.parameters()), lr=0.001, momentum=0.9)
 
 if use_cuda: myModel = myModel.cuda()
 
@@ -244,12 +244,34 @@ testImage4 = transform('data/Test/TestCeleb_10/25-FaceId-0.jpg')
 testImage5 = transform('data/Test/TestCeleb_10/26-FaceId-0.jpg')
 testImage6 = transform('data/Test/TestCeleb_10/24-FaceId-0.jpg')
 
-output1 = myModel(testImage1)
-output2 = myModel(testImage2)
-output3 = myModel(testImage2)
-output4 = myModel(testImage4)
-output5 = myModel(testImage5)
-output6 = myModel(testImage6)
+def detectGender(data):
+    olist = model(data)
+    genList = []
+    for j in range(len(olist)): olist[j] = F.softmax(olist[j])
+    for j in range(len(olist)//2):
+        ocls,ogen = olist[j*2].data.cpu(),olist[j*2+1]
+        FB,FC,FH,FW = ocls.size() # feature map size
+        stride = 2**(j+2)    # 4,8,16,32,64,128
+        anchor = stride*4
+        for Findex in range(FH*FW):
+            windex,hindex = Findex%FW,Findex//FW
+            axc,ayc = stride/2+windex*stride,stride/2+hindex*stride
+            score = ocls[0,1,hindex,windex]
+            if score<0.05: continue
+            genScore = ogen[0,:,hindex,windex].contiguous().view(1,2)
+            genList.append(genScore)
+        male = 0.0; female = 0.0;
+        for gen in genList:
+            male += gen[0]
+            female += gen[1]
+        return [male, female]
+
+output1 = detectGender(testImage1)
+output2 = detectGender(testImage2)
+output3 = detectGender(testImage2)
+output4 = detectGender(testImage4)
+output5 = detectGender(testImage5)
+output6 = detectGender(testImage6)
 print("testImage1 - ",output1)
 print("testImage2 - ",output2)
 print("testImage3 - ",output3)
