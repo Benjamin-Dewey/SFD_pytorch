@@ -214,7 +214,7 @@ myModel.conv6_2_gender = nn.Conv2d(512, 2, kernel_size=3, stride=1, padding=1) #
 myModel.conv6_2_gender.weight[0].data.copy_(myModel.conv6_2_mbox_conf.weight[0].data)
 myModel.conv6_2_gender.weight[1].data.copy_(myModel.conv6_2_mbox_conf.weight[0].data)
 
-optimizer = optim.SGD(filter(lambda p: p.requires_grad,myModel.parameters()), lr=0.00005, momentum=0.7)
+optimizer = optim.SGD(filter(lambda p: p.requires_grad,myModel.parameters()), lr=0.0001, momentum=0.4)
 
 if use_cuda: myModel = myModel.cuda()
 
