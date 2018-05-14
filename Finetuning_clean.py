@@ -237,12 +237,12 @@ def transform(img_path):
 
 myModel = myModel.cuda()
 
-testImage1 = transform('data/Test/TestCeleb_4/25-FaceId-0.jpg')
-testImage2 = transform('data/Test/TestCeleb_4/26-FaceId-0.jpg')
-testImage3 = transform('data/Test/TestCeleb_4/27-FaceId-0.jpg')
-testImage4 = transform('data/Test/TestCeleb_10/25-FaceId-0.jpg')
-testImage5 = transform('data/Test/TestCeleb_10/26-FaceId-0.jpg')
-testImage6 = transform('data/Test/TestCeleb_10/24-FaceId-0.jpg')
+testImage1 = transform('data/Test/TestCeleb_1/20-FaceId-0.jpg')
+testImage2 = transform('data/Test/TestCeleb_1/22-FaceId-0.jpg')
+testImage3 = transform('data/Test/TestCeleb_1/23-FaceId-0.jpg')
+testImage4 = transform('data/Test/TestCeleb_6/23-FaceId-0.jpg')
+testImage5 = transform('data/Test/TestCeleb_6/24-FaceId-0.jpg')
+testImage6 = transform('data/Test/TestCeleb_6/25-FaceId-0.jpg')
 
 def detectGender(data, model):
     olist = model(data)
@@ -264,13 +264,13 @@ def detectGender(data, model):
 
 output1 = detectGender(testImage1, myModel)
 output2 = detectGender(testImage2, myModel)
-output3 = detectGender(testImage2, myModel)
+output3 = detectGender(testImage3, myModel)
 output4 = detectGender(testImage4, myModel)
 output5 = detectGender(testImage5, myModel)
 output6 = detectGender(testImage6, myModel)
 print("testImage1 - ",output1)
 print("testImage2 - ",output2)
 print("testImage3 - ",output3)
-print("testImage1 - ",output4)
-print("testImage2 - ",output5)
-print("testImage3 - ",output6)
+print("testImage4 - ",output4)
+print("testImage5 - ",output5)
+print("testImage6 - ",output6)
