@@ -119,7 +119,7 @@ def save(model, optimizer, loss, filename):
 # In[6]:
 
 
-def train_model(model, criterion, optimizer, num_classes, num_epochs = 100):
+def train_model(model, criterion, optimizer, num_classes, num_epochs = 150):
     for epoch in range(num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
